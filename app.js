@@ -10,8 +10,11 @@ var usersRouter = require("./routes/users");
 const catalogRouter = require("./routes/catalog");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB =
+const dev_db_url =
   "mongodb+srv://jooniescobar98:myGtoWcByQqEpVVU@cluster0.2ecly3r.mongodb.net/local_library?retryWrites=true&w=majority";
+
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
+
 const helmet = require("helmet");
 
 var app = express();
@@ -19,7 +22,7 @@ var app = express();
 const RateLimit = require("express-rate-limit");
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 20,
+  max: 30,
 });
 
 app.use(limiter);
